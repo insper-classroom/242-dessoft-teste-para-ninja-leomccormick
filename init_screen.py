@@ -1,9 +1,10 @@
 import pygame
-from config import FPS, GAME, WHITE, font, BLUE, WIDTH, HEIGHT, BLACK
+from config import FPS, GAME, WHITE, BLUE, WIDTH, HEIGHT, BLACK
 
 def init_screen(window):
 
     # Cria o texto do botão
+    font = pygame.font.Font(None, 74)
     text = font.render("Jogar", True, WHITE)
     text_rect = text.get_rect()
 

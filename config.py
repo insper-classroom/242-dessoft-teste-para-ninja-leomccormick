@@ -25,6 +25,3 @@ GRAY = (100, 100, 100)
 # Define a cor do botão e do texto
 BUTTON_COLOR = BLUE
 BUTTON_TEXT_COLOR = WHITE
-
-# Define a fonte e o tamanho do texto
-font = pygame.font.Font(None, 74)

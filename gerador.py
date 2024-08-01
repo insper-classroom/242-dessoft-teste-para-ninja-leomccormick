@@ -7,5 +7,3 @@ def gera_numeros() -> list:
     n4 = randint(1, 99)
     lista_num = [n1, n2, n3, n4]
     return lista_num
-
-print(gera_numeros())
