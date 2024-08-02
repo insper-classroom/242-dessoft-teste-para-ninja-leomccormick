@@ -131,7 +131,5 @@ def game_screen(window):
 
         pygame.display.flip()  # Atualiza o display
 
-
-    score = 0
     return state, score
 
