@@ -26,6 +26,8 @@ GRAY = (100, 100, 100)
 BUTTON_COLOR = BLUE
 BUTTON_TEXT_COLOR = WHITE
 
+font_tempo = pygame.font.Font(None, 35)
+
 # Define os quadrados
 sqr_width = 100
 sqr_height = 100

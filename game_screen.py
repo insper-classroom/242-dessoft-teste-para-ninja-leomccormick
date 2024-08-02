@@ -1,4 +1,4 @@
-from config import QUIT, WIDTH, HEIGHT, FPS, GAME, WHITE, RED, GREEN, BLUE, GRAY, BLACK, barra_rect, sqr_1_rect, sqr_2_rect, sqr_3_rect, rect_certo, rect_errado, text_certo, text_errado
+from config import QUIT, WIDTH, HEIGHT, FPS, GAME, WHITE, RED, GREEN, BLUE, GRAY, BLACK, barra_rect, sqr_1_rect, sqr_2_rect, sqr_3_rect, rect_certo, rect_errado, text_certo, text_errado, font_tempo
 import pygame
 from gerador import gera_numeros
 from random import shuffle
@@ -94,6 +94,10 @@ def game_screen(window):
         text_soma_rect = text_soma.get_rect()
         text_soma_rect.center = (30, 30)
 
+        text_tempo = font_tempo.render(f"Tempo restante: {60-tempo_decorrido:.0f}", True, BLACK)
+        text_tempo_rect = text_tempo.get_rect()
+        text_tempo_rect.topleft = (WIDTH-240, 20)
+
         # Processa eventos (fechar janela, teclas)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -123,6 +127,8 @@ def game_screen(window):
         window.blit(text3, text3_rect)
 
         window.blit(text_soma, text_soma_rect)
+        window.blit(text_tempo, text_tempo_rect)
+
         pygame.display.flip()  # Atualiza o display
 
 
