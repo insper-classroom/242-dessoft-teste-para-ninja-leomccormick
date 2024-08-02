@@ -18,7 +18,7 @@ def init_screen(window):
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
     jogar_rect.center = button_rect.center
 
-    clock = pygame.time.Clock()  # Ajusta a velocidade do jogo
+    clock = pygame.time.Clock()
 
     running = True
     while running:
@@ -38,10 +38,10 @@ def init_screen(window):
                     state = None
                     running = False
 
-        window.fill(WHITE)  # Desenha o fundo
+        window.fill(WHITE)
         pygame.draw.rect(window, BLUE, button_rect) # Desenha o botão
         pygame.draw.rect(window, BLACK, button_rect, 5)  # Desenha a borda com 5 pixels de espessura
-        window.blit(text_jogar, jogar_rect) # Desenha o texto no botão
-        pygame.display.flip()  # Atualiza o display
+        window.blit(text_jogar, jogar_rect) # Desenha o texto "Jogar"
+        pygame.display.flip()
 
     return state

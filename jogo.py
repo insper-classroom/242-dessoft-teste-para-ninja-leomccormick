@@ -6,25 +6,23 @@ from quit_screen import quit_screen
 
 # Inicializa os módulos do pygame
 pygame.init()
-pygame.font.init()
 pygame.mixer.init()
 
-# Configura a janela do jogo com largura e altura especificadas
+# Configura a janela do jogo
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Jogo para ninja de Dessoft")
 
-# Define o estado inicial do jogo
 state = INIT    
 
 # Loop principal do jogo
 while True:
     if state == INIT:
-        state = init_screen(WINDOW) # Mostra a tela inicial
+        state = init_screen(WINDOW) # Tela inicial
     elif state == GAME: 
-        state, score = game_screen(WINDOW) # Executa a tela do jogo
+        state, score = game_screen(WINDOW) # Tela do jogo
     elif state == QUIT: 
-        state = quit_screen(WINDOW, score) # Mostra a tela de saída
+        state = quit_screen(WINDOW, score) # Tela final
     else:
-        break # Sai do loop principal e encerra o jogo
+        break # Encerra o jogo
 
 pygame.quit()
