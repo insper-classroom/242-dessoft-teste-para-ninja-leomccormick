@@ -4,9 +4,9 @@ from config import FPS, GAME, WHITE, BLUE, WIDTH, HEIGHT, BLACK
 def init_screen(window):
 
     # Cria o texto do botão
-    font = pygame.font.Font(None, 74)
-    text = font.render("Jogar", True, WHITE)
-    text_rect = text.get_rect()
+    font_jogar = pygame.font.Font(None, 74)
+    text_jogar = font_jogar.render("Jogar", True, WHITE)
+    jogar_rect = text_jogar.get_rect()
 
     # Define as dimensões do botão
     button_width = 200
@@ -16,7 +16,7 @@ def init_screen(window):
 
     # Define o retângulo do botão e do texto
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
-    text_rect.center = button_rect.center
+    jogar_rect.center = button_rect.center
 
     clock = pygame.time.Clock()  # Ajusta a velocidade do jogo
 
@@ -41,7 +41,7 @@ def init_screen(window):
         window.fill(WHITE)  # Desenha o fundo
         pygame.draw.rect(window, BLUE, button_rect) # Desenha o botão
         pygame.draw.rect(window, BLACK, button_rect, 5)  # Desenha a borda com 5 pixels de espessura
-        window.blit(text, text_rect) # Desenha o texto no botão
+        window.blit(text_jogar, jogar_rect) # Desenha o texto no botão
         pygame.display.flip()  # Atualiza o display
 
     return state

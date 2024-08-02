@@ -1,106 +1,116 @@
-from config import QUIT, WIDTH, HEIGHT, FPS, GAME, WHITE, RED, GREEN, BLUE, GRAY, BLACK, barra_rect
+from config import QUIT, WIDTH, HEIGHT, FPS, GAME, WHITE, RED, GREEN, BLUE, GRAY, BLACK, barra_rect, sqr_1_rect, sqr_2_rect, sqr_3_rect, rect_certo, rect_errado, text_certo, text_errado
 import pygame
 from gerador import gera_numeros
+from random import shuffle
+import time
+
 
 def game_screen(window):
+
+    score = 0
+    vidas = 3
+
+    def verificar_e_gerar(n_atual: int, n_errado: int, sqr: pygame.Rect) -> tuple:
+        nonlocal score, vidas
+        pygame.draw.rect(window, WHITE, sqr)
+        if n_atual == n_errado:
+            print("Acertou")
+            score += 1
+            rect_certo.center = sqr.center
+            window.blit(text_certo, rect_certo)
+        else: 
+            print("Errou")
+            vidas -= 1
+            rect_errado.center = sqr.center
+            window.blit(text_errado, rect_errado)
+        pygame.display.flip()
+        time.sleep(1)
+        n1, n2, n_errado, soma = gera_numeros()
+        numeros = [n1, n2, n_errado]
+        shuffle(numeros)
+        print(score)
+        return numeros, n_errado, soma
+    
+    state = GAME
     clock = pygame.time.Clock()
 
     font = pygame.font.Font(None, 50)
 
-    # Define os quadrados
-    sqr_width = 100
-    sqr_height = 100
-    sqr_x = (WIDTH - sqr_width) // 2
-
-    sqr_1_y = HEIGHT - 150
-    sqr_2_y = HEIGHT - 250
-    sqr_3_y = HEIGHT - 350
-
-    sqr_1_rect = pygame.Rect(sqr_x, sqr_1_y, sqr_width, sqr_height)
-    sqr_2_rect = pygame.Rect(sqr_x, sqr_2_y, sqr_width, sqr_height)
-    sqr_3_rect = pygame.Rect(sqr_x, sqr_3_y, sqr_width, sqr_height)
-
     n1, n2, n_errado, soma = gera_numeros()
-    n1, n2, n3, n4 = n1, n2, n_errado, soma
+    lista_sqrs = [n1, n2, n_errado]
+    shuffle(lista_sqrs)
+    n_sqr1, n_sqr2, n_sqr3 = lista_sqrs
     
     sqr_1 = True
     sqr_2 = True
     sqr_3 = True
 
-    running = True
-    while running:
+    tempo_inicial = pygame.time.get_ticks()  # Guarda o tempo de início
+
+    while (state != QUIT and state is not None):
         clock.tick(FPS)
 
+        # Calcula o tempo decorrido
+        tempo_decorrido = (pygame.time.get_ticks() - tempo_inicial) / 1000  # Tempo em segundos
 
+        # Verifica se o tempo acabou
+        print(f"{tempo_decorrido:.0f}")
+        if tempo_decorrido >= 60:
+            state = QUIT
+
+        # Verifica se o jogador ainda tem vidas
+        if vidas == 0:
+            state = QUIT
 
         # Escrevendo os números 
         if sqr_1:
-            text1 = font.render(str(n1), True,  BLACK)
+            text1 = font.render(str(n_sqr1), True,  BLACK)
             text1_rect = text1.get_rect()
             text1_rect.center = sqr_1_rect.center
         else:
             sqr_1 = True
-            if n1 == n_errado:
-                print("Certo!")
-            else: 
-                print("Errado!")
-            n1, n2, n_errado, soma = gera_numeros()
+            numeros, n_errado, soma = verificar_e_gerar(n_sqr1, n_errado, sqr_1_rect)
+            n_sqr1, n_sqr2, n_sqr3 = numeros
 
         if sqr_2:
-            text2 = font.render(str(n2), True, BLACK)
+            text2 = font.render(str(n_sqr2), True, BLACK)
             text2_rect = text2.get_rect()
             text2_rect.center = sqr_2_rect.center
         else:
             sqr_2 = True
-            if n2 == n_errado:
-                print("Certo!")
-            else: 
-                print("Errado!")
-            n1, n2, n_errado, soma = gera_numeros()
+            numeros, n_errado, soma = verificar_e_gerar(n_sqr2, n_errado, sqr_2_rect)
+            n_sqr1, n_sqr2, n_sqr3 = numeros
 
         if sqr_3:
-            text3 = font.render(str(n3), True, BLACK)
+            text3 = font.render(str(n_sqr3), True, BLACK)
             text3_rect = text3.get_rect()
             text3_rect.center = sqr_3_rect.center
         else:
             sqr_3 = True
-            if n3 == n_errado:
-                print("Certo!")
-            else: 
-                print("Errado!")
-            n1, n2, n_errado, soma = gera_numeros()
+            numeros, n_errado, soma = verificar_e_gerar(n_sqr3, n_errado, sqr_3_rect)
+            n_sqr1, n_sqr2, n_sqr3 = numeros
 
-        text_soma = font.render(str(n4), True, BLACK)
+        text_soma = font.render(str(soma), True, BLACK)
         text_soma_rect = text_soma.get_rect()
-        text_soma_rect.center = (50, 50)
-
-        n1, n2, n3, n4 = n1, n2, n_errado, soma
-
+        text_soma_rect.center = (30, 30)
 
         # Processa eventos (fechar janela, teclas)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = None
-                running = False
-                botoes = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if sqr_1_rect.collidepoint(event.pos):
-                    print(n1)
+                    print(n_sqr1)
                     sqr_1 = False
-                    botoes = False
                 if sqr_2_rect.collidepoint(event.pos):
-                    print(n2)
+                    print(n_sqr2)
                     sqr_2 = False
-                    botoes = False
                 if sqr_3_rect.collidepoint(event.pos):
-                    print(n3)
+                    print(n_sqr3)
                     sqr_3 = False
-                    botoes = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     state = None
-                    running = False
-                    botoes = False
 
         window.fill(WHITE)  # Desenha o fundo
         pygame.draw.rect(window, GRAY, barra_rect)
@@ -116,4 +126,6 @@ def game_screen(window):
         pygame.display.flip()  # Atualiza o display
 
 
-    return state
+    score = 0
+    return state, score
+
