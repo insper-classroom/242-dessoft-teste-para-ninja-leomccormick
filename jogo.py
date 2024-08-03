@@ -4,9 +4,8 @@ from init_screen import init_screen
 from game_screen import game_screen
 from quit_screen import quit_screen
 
-# Inicializa os módulos do pygame
+# Inicializa o pygame
 pygame.init()
-pygame.mixer.init()
 
 # Configura a janela do jogo
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
